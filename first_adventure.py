@@ -317,7 +317,7 @@ def climb():
         print("\nThe end...for now")
         replay()
     elif action == "2":
-        print("You decide to head back to the entrance")
-        entrance()
+        print("You move back a little.")
+        notice_opening()
 
 start()

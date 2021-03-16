@@ -220,7 +220,7 @@ def cave2():
 def bearfight():
     action = input(f"{w}[1] Run!, [2] Punch the bear")
     global punchcounter
-    print(f"Bear HP: {bearhp}")
+    print(f"\nBear HP: {bearhp}")
     print(f"Your HP: {hp}")
     if action == "1":
         dilemma()

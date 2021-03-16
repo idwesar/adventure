@@ -1,13 +1,15 @@
 import random
 
 w = "What do you do?: "
-hp = 100
 fire = False
 causeofdeath = "test"
 torch = False
 seencave = False
 bearhp = 200
-counter = 0
+punchcounter = 0
+hiding = 0
+
+hp = 100
 
 def start():
     print("\nYou have found yourself at the entrance to a cave. A blizzard rages outside, but the cave gives you some much needed shelter.")
@@ -50,6 +52,7 @@ def  entrance():
             print("\nYou enter the cave. The sound of howling wind fades away as you head into the darkness. The light of the entrance fades too...if only you could bring some with you...")
         cave1()
     elif entrance == "2":
+        print("\nYou walk into the blizzard, shielding your face from the stinging snow. You feel the cold seep into your bones.")
         blizzard()
     elif entrance == "3":
         if fire:
@@ -68,8 +71,8 @@ def  entrance():
 def sitbyfire():
     global hp
     if hp < 100:
-        hp = 10
-        print("The warmth fills your bones and you feel your strength returning.")
+        hp = 100
+        print("The warmth fills your bones and you feel your strength returning. \nHP returned to maximum.")
         print(f"HP: {hp}")
     else:
         print("\nThe warmth washes over you as you contemplate your next move.")
@@ -77,8 +80,8 @@ def sitbyfire():
     
 def blizzard():
     global hp
-    print("\nYou walk into the blizzard, shielding your face from the stinging snow. You feel the cold seep into your bones. HP - 10. ")
     hp -= 10
+    print("HP -10")
     print(f"HP: {hp}")
     if hp <= 0:
         global causeofdeath
@@ -200,16 +203,16 @@ def notice_opening():
 
 def bearfight1():
     action = input(f"{w}[1] Run!, [2] Punch the bear")
-    global counter
+    global punchcounter
     if action == "1":
         dilemma()
     elif action == "2":
-        if counter == 0:
+        if punchcounter == 0:
             print("\nYou punch the bear as hard as you can. The mother bear does not look amused. She swipes a massive paw at you, catching your shoulder.")
         else:
             print("\nYou punch the bear again. She swipes at you again - I'm not sure what you were expecting.")
         bearpunch()
-        counter += 1
+        punchcounter += 1
         bearfight1()
     else:
         invalid()
@@ -217,25 +220,42 @@ def bearfight1():
 
 def bearpunch():
     global bearhp
-    global hp
-    damage1 = random.randint(1, 5)
-    bearhp -= damage1
-    print(f"You do {damage1} damage")
+    damage = random.randint(1, 5)
+    bearhp -= damage
+    print(f"\nYou do {damage} damage")
     print(f"Bear HP: {bearhp}")
-    damage2 = random.randint(60, 80)
-    hp -= damage2
+    takedam_bear()
+
+def takedam_bear():
+    global hp
+    damage = random.randint(60, 80)
+    hp -= damage
     if hp <= 0:
             global causeofdeath
             causeofdeath = "Mauled by a bear"
             death()
     else:
-        print(f"The bear does {damage2} damage")
+        print(f"\nThe bear does {damage} damage")
         print(f"HP: {hp}")
             
 def dilemma():
+    global hp
     print("\nYou turn and run, hearing the angry mother bear close behind you. As you reach the mouth of the cave you hesitate. The blizzard is still raging outside.")
     action = input(f"{w}[1] Stay in the cave and face the bear, [2] Go into the blizzard")
     if action == "1":
-        print("poop")
+        print("You stand your ground, unwilling to brave the raging blizzard outside. The mother bear approaches and swipes at you again.")
+        takedam_bear()
+    elif action == "2":
+        print("You run into the blizzard and hide as best you can. The mother bear comes to the mouth of the cave, sniffs around suspiciously, then slowly turns around to return to her cubs.")
+        blizzard()
+        outside()
 
+def outside():
+    global hiding
+    action = input(f"{w}[1] Wait for the mother bear to return to her cubs, [2] Go back into the cave")
+    if action == "1":
+        print("You decide to stay hidden for a bit longer, just in case the mother bear is still angry.")
+        hiding += 1
+        blizzard()
+    
 start()

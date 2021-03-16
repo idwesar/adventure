@@ -1,13 +1,17 @@
+import random
+
 w = "What do you do?: "
 hp = 100
 fire = False
 causeofdeath = "test"
 torch = False
 seencave = False
+bearhp = 200
+counter = 0
 
 def start():
     print("\nYou have found yourself at the entrance to a cave. A blizzard rages outside, but the cave gives you some much needed shelter.")
-    print (f"Health: {hp}")
+    print (f"HP: {hp}")
     entrance()
 
 def invalid():
@@ -64,9 +68,9 @@ def  entrance():
 def sitbyfire():
     global hp
     if hp < 100:
-        hp += 10
+        hp = 10
         print("The warmth fills your bones and you feel your strength returning.")
-        print(f"Health: {hp}")
+        print(f"HP: {hp}")
     else:
         print("\nThe warmth washes over you as you contemplate your next move.")
     entrance()
@@ -76,7 +80,7 @@ def blizzard():
     print("\nYou walk into the blizzard, shielding your face from the stinging snow. You feel the cold seep into your bones. HP - 10. ")
     hp -= 10
     print(f"HP: {hp}")
-    if hp == 0:
+    if hp <= 0:
         global causeofdeath
         causeofdeath = "Froze to death"
         death()
@@ -180,11 +184,11 @@ def cave3_nt():
 def cave2():
     action = input(f"{w}[1] Back away, [2] Poke the bears")
     if action == "1":
-        print("You back away slightly, not wanting to wake the bears.")
+        print("\nYou back away slightly, not wanting to wake the bears.")
         notice_opening()
     elif action == "2":
-        print("You get closer and poke the mother bear. She stirs, apparently not pleased about being woken up, or about someone being so close to her cubs.")
-        print("Bear HP: 200")
+        print("\nYou get closer and poke the mother bear. She stirs, apparently not pleased about being woken up, or about someone being so close to her cubs.")
+        print(f"Bear HP: {bearhp}")
         print(f"Your HP: {hp}")
         bearfight1()
     else:
@@ -192,10 +196,46 @@ def cave2():
         cave2()
 
 def notice_opening():
-    print("You cast your eyes around the cave again and notice a small opening in the wall near the bears.")
+    print("\nYou cast your eyes around the cave again and notice a small opening in the wall near the bears.")
 
 def bearfight1():
     action = input(f"{w}[1] Run!, [2] Punch the bear")
-    print("UPDATE FROM HERE")
-    
+    global counter
+    if action == "1":
+        dilemma()
+    elif action == "2":
+        if counter == 0:
+            print("\nYou punch the bear as hard as you can. The mother bear does not look amused. She swipes a massive paw at you, catching your shoulder.")
+        else:
+            print("\nYou punch the bear again. She swipes at you again - I'm not sure what you were expecting.")
+        bearpunch()
+        counter += 1
+        bearfight1()
+    else:
+        invalid()
+        bearfight1()
+
+def bearpunch():
+    global bearhp
+    global hp
+    damage1 = random.randint(1, 5)
+    bearhp -= damage1
+    print(f"You do {damage1} damage")
+    print(f"Bear HP: {bearhp}")
+    damage2 = random.randint(60, 80)
+    hp -= damage2
+    if hp <= 0:
+            global causeofdeath
+            causeofdeath = "Mauled by a bear"
+            death()
+    else:
+        print(f"The bear does {damage2} damage")
+        print(f"HP: {hp}")
+            
+def dilemma():
+    print("\nYou turn and run, hearing the angry mother bear close behind you. As you reach the mouth of the cave you hesitate. The blizzard is still raging outside.")
+    action = input(f"{w}[1] Stay in the cave and face the bear, [2] Go into the blizzard")
+    if action == "1":
+        print("poop")
+
 start()

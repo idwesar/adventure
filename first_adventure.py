@@ -52,10 +52,10 @@ def  entrance():
     global torch
     global seencave
     if fire:
-        entrance = input(f"{w}[1] Enter the cave, [2] Go out into the blizzard, [3] Sit by the fire for a while (heal).")
+        action = input(f"{w}[1] Enter the cave, [2] Go out into the blizzard, [3] Sit by the fire for a while (heal).")
     else:
-        entrance =  input(f"{w}[1] Enter the cave, [2] Go out into the blizzard, [3] Start a fire, [4] Wait here a while.")
-    if entrance == "1":
+        action =  input(f"{w}[1] Enter the cave, [2] Go out into the blizzard, [3] Start a fire, [4] Wait here a while.")
+    if action == "1":
         if fire:
             if seencave:
                 print("\nYou head back into the cave.")
@@ -64,17 +64,17 @@ def  entrance():
         else:
             print("\nYou enter the cave. The sound of howling wind fades away as you head into the darkness. The light of the entrance fades too...if only you could bring some with you...")
         cave1()
-    elif entrance == "2":
+    elif action == "2":
         print("\nYou walk into the blizzard, shielding your face from the stinging snow. You feel the cold seep into your bones.")
         blizzard()
-    elif entrance == "3":
+    elif action == "3":
         if fire:
             print("\nYou decide to sit by the fire for a while.")
         else:
             fire = True
             print("\nYou decide to light a fire.")
         sitbyfire()
-    elif entrance == "4":
+    elif action == "4":
         print("\nYou hang out in the shelter of the cave entrance for a while.")
         entrance()
     else:
@@ -135,15 +135,15 @@ def cave1():
             print("\nYou decide to back away. You head back to the entrance of the cave and consider what to do next.")
             entrance()
     else:
-        cave = input(f"{w}[1] Go back and try to make a torch, [2] Continue into the cave")
+        action = input(f"{w}[1] Go back and try to make a torch, [2] Continue into the cave")
         global fire
-        if cave == "1":
+        if action == "1":
             print("\nYou head back to the entrance of the cave.")
             if fire:
                 light_torch()
             else:
                 nofire()
-        elif cave == "2":
+        elif action == "2":
             cave2_nt()
         else:
             invalid()
@@ -157,13 +157,13 @@ def light_torch():
 
 def nofire():
     print("\nIf you had a fire, you could make yourself a torch...")
-    nofire = input(f"{w}[1] Light a fire, [2] Go into the cave anyway")
-    if nofire == "1":
+    action = input(f"{w}[1] Light a fire, [2] Go into the cave anyway")
+    if action == "1":
         global fire
         print("\nYou light a fire.")
         fire = True
         light_torch()
-    elif nofire == "2":
+    elif action == "2":
         cave2_nt()
     else:
         invalid()
@@ -172,14 +172,14 @@ def nofire():
 def cave2_nt():
     global fire
     print("\nYou decide to go into the cave anyway. You stumble through the darkness, trying to feel your way along the jagged cave walls and uneven floor.")
-    cave2 = input(f"{w}[1] Go back for a torch, [2] Keep going into the cave")
-    if cave2 == "1":
+    action = input(f"{w}[1] Go back for a torch, [2] Keep going into the cave")
+    if action == "1":
         print("You head back to the entrance of the cave.")
         if fire == True:
             light_torch()
         else:
             nofire()
-    elif cave2 == "2":
+    elif action == "2":
         print("\nYou head further into the cave, tripping over your own feet and the loose rocks which seem to litter the floor. You feel like you're starting to hear noises...but you aren't sure.")
         cave3_nt()
     else:
@@ -187,16 +187,16 @@ def cave2_nt():
         cave2_nt()
 
 def cave3_nt():
-    cave3 = input(f"{w}[1] Go back and get a torch, [2] Carry on into the cave")
+    action = input(f"{w}[1] Go back and get a torch, [2] Carry on into the cave")
     global fire
-    if cave3 == "1":
+    if action == "1":
         print("\nYou decide to go back and get a torch.")
         if fire == True:
             torch_fire()
         else:
             print("\nYou return to the light at the entrance of the cave. If you had a fire, you could light a torch...")
             torch_nofire()
-    elif cave3 == "2":
+    elif action == "2":
         global causeofdeath
         print("\nYou decide to keep going into the darkness, ignoring the noises you hear. They seem to be getting louder though, perhaps they weren't just in your head...You're beginning to think this wasn't the best idea. You hear something coming towards you. Suddenly, a huge paw  swipes at you, knocking you full force into the cave wall.")
         causeofdeath = "Attacked by a monster...probably should have brought a torch."

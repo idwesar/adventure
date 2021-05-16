@@ -1,5 +1,6 @@
 import random
 
+#game variables
 w = "What do you do?: "
 causeofdeath = "test"
 fire = False
@@ -10,6 +11,7 @@ punchcounter = 0
 hiding = "base"
 hp = 100
 
+#game setup functions
 def start():
     print("\nYou have found yourself at the entrance to a cave. A blizzard rages outside, but the cave gives you some much needed shelter.")
     print (f"HP: {hp}")
@@ -47,6 +49,7 @@ def replay():
         invalid()
         replay()
 
+#scene and action functions
 def  entrance():
     global fire
     global torch
@@ -320,4 +323,5 @@ def climb():
         print("You move back a little.")
         notice_opening()
 
+        
 start()
